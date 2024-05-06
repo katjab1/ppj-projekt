@@ -55,6 +55,8 @@ fun main() {
             println("http status code: ${status { code }}")
             println("http status message: ${status { message }}")
 
+            println("Cleverfit fitnes studiji po Sloveniji:")
+
             htmlDocument {
                 header {
                     withClass = "eael-entry-header"
@@ -70,4 +72,35 @@ fun main() {
             }
         }
     }
+    println("========== scraping - printing example ==========")
+    // docs: https://docs.skrape.it/docs/
+    skrape(HttpFetcher) {   // <-- pass any Fetcher, e.g. HttpFetcher, BrowserFetcher, ...
+        request {
+            // request options goes here, e.g the most basic would be url
+            // https://docs.skrape.it/docs/http-client/request-options
+            url = "https://bodifit-akademija.si/akademija/"
+        }
+
+        response {
+            // do stuff with the response like parsing the response body
+            // https://docs.skrape.it/docs/http-client/response
+            println("http status code: ${status { code }}")
+            println("http status message: ${status { message }}")
+
+            println("Predavatelji na akademiji")
+
+            htmlDocument {
+                div {
+                    withClass = "elementor-widget-container"
+                    h3 {
+                        withClass = "widget-title"
+                        findAll { eachText.forEach { println(it) } }
+                    }
+
+                    }
+                }
+            }
+        }
 }
+
+
